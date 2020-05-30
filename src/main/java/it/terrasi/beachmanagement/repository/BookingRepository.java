@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import it.terrasi.beachmanagement.entities.Booking;
 
 @Repository
-public interface BookingRepository extends JpaRepository<Booking, Integer> {
+public interface BookingRepository extends JpaRepository<Booking, Long> {
     
     public Set<Booking> findByUserId(long userId, Sort sort);
 

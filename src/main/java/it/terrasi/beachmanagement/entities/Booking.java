@@ -21,7 +21,7 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private Date fromDate;
 
@@ -45,16 +45,16 @@ public class Booking {
     private Set<UmbrellaGrid> umbrellas;
 
     /**
-     * @return int return the id
+     * @return long return the id
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
-
+    
     /**
-     * @param id the id to set
+     * @param id long id to set
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
