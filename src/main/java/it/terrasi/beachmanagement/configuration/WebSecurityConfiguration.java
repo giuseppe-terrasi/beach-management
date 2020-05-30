@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import it.terrasi.beachmanagement.services.AppUserDetailsService;
 
@@ -33,7 +32,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/").permitAll()
             .antMatchers("/login").permitAll()
             .antMatchers("/registration").permitAll()
             .antMatchers("/admin/**").hasAuthority("ADMIN")
@@ -45,8 +43,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .usernameParameter("username")
             .passwordParameter("password")
             .and().logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/").and().exceptionHandling()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/")
+            .deleteCookies("JSESSIONID").invalidateHttpSession(true) 
+            .and().exceptionHandling()    
             .accessDeniedPage("/access-denied");
     }
 
