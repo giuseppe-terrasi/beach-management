@@ -1,7 +1,7 @@
 package it.terrasi.beachmanagement.repository;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,9 +12,9 @@ import it.terrasi.beachmanagement.entities.Booking;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     
-    public Set<Booking> findByUserId(long userId, Sort sort);
+    public List<Booking> findByUserId(long userId, Sort sort);
 
-    public Set<Booking> findByFromDateAndToDate(Date fromDate, Date toDate, Sort sort);
+    public List<Booking> findByFromDateAndToDate(Date fromDate, Date toDate, Sort sort);
 
     public Booking findByFromDateAndToDateAndUmbrellas_id(Date fromDate, Date toDate, int umbrellaId);
 }
