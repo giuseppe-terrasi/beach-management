@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeController {
+public class UmbrellaGridController {
+    
+    @GetMapping("/admin/grid")
+    public ModelAndView grid(ModelAndView modelAndView) {
+        modelAndView.addObject("cssActivePage", "gird");
+        modelAndView.setViewName("admin/umbrellaGrid");
 
-    @GetMapping("/")
-    public ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.addObject("cssActivePage", "home");
-        modelAndView.setViewName("home");
         return modelAndView;
     }
 }
