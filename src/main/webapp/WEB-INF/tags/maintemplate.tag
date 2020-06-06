@@ -1,4 +1,5 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
+<%@attribute name="styles" fragment="true" %>
 <%@attribute name="scripts" fragment="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -20,6 +21,9 @@
 
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <%-- Page level styles --%>
+  <jsp:invoke fragment="styles"/>
 
 </head>
 
@@ -61,10 +65,16 @@
       <li class="nav-item ${cssActivePage == 'gird' ? 'active' : ''}">
         <a class="nav-link" href="/admin/grid">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Grid</span></a>
+          <span>Umbrella grid</span></a>
       </li>
 
-      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item ${cssActivePage == 'manageUsers' ? 'active' : ''}">
+        <a class="nav-link" href="/admin/users">
+          <i class="fa fa-users"></i>
+          <span>Users</span></a>
+      </li>
+
+      <%-- <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
@@ -79,7 +89,7 @@
             <a class="collapse-item" href="utilities-other.html">Other</a>
           </div>
         </div>
-      </li>
+      </li> --%>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

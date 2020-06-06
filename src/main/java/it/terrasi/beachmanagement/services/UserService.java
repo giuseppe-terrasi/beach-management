@@ -1,5 +1,7 @@
 package it.terrasi.beachmanagement.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,5 +31,9 @@ public class UserService {
         user.setActive(true);
         return userRepository.save(user);
     }
+
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }    
     
 }

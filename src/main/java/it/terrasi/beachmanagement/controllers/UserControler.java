@@ -1,5 +1,7 @@
 package it.terrasi.beachmanagement.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,19 @@ public class UserControler {
         }
 
         modelAndView.setViewName("registration");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/users")
+    public ModelAndView users(ModelAndView modelAndView)
+    {
+        modelAndView.setViewName("/admin/manageUsers");
+        modelAndView.addObject("cssActivePage", "manageUsers");
+
+        List<User> users = userService.getAll();
+        
+        modelAndView.addObject("users", users);
 
         return modelAndView;
     }
