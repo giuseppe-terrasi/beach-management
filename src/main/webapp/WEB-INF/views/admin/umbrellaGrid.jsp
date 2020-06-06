@@ -5,6 +5,44 @@
 <t:maintemplate>
     <jsp:attribute name="scripts">
         <script>
+            var selectedRowNumber = 0;
+            var selectedColumnNumber = 0;
+
+            $(document).ready(function() {
+                $('.addUmbrellaBtn').on('click', newUmbrellaBtnClick)
+            });
+
+
+            function newUmbrellaBtnClick() {
+                selectedRowNumber = parseInt($(this).attr('data-rowid'), 10);
+                selectedColumnNumber = parseInt($(this).attr('data-columnid'), 10);
+                $('#addUmbrellaForm-rowId').val(selectedRowNumber);
+                $('#addUmbrellaForm-columnId').val(selectedColumnNumber);
+                $('#addUmbrellaModal').modal('toggle');
+            }
+
+            function onAddUbrellaSuccess(dataRecived) {
+                 var newRow = '';
+
+                if(selectedColumnNumber == 1) {
+                    newRow = $('#umbrella-grid-table tr:last-child').clone().prop('id', 'umbrella-grid-row-' + (selectedRowNumber + 1))
+                    $(newRow).find('button').attr('data-rowid', selectedRowNumber + 1);
+                }
+
+                $(dataRecived).insertBefore('#umbrella-grid-row-' + selectedRowNumber + ' td:last-child')
+                $('[data-rowid="' + selectedRowNumber + '"][data-columnid="' + selectedColumnNumber + '"]')
+                .attr('data-columnid', selectedColumnNumber + 1);
+
+                if(newRow !== '') {
+                    $(newRow).insertAfter   ('#umbrella-grid-table tr:last-child');
+                    $(newRow).on('click', newUmbrellaBtnClick);
+                }
+                
+                $('#addUmbrellaModal').modal('toggle');
+                
+                document.getElementById('addUmbrellaForm').reset();
+            }
+
             function addUmbrella() {
                 var form = document.getElementById('addUmbrellaForm');
                 var dataObj = Object.fromEntries(new FormData(form));
@@ -17,20 +55,7 @@
                     data : data,
                     dataType:'html',
                     contentType: 'application/json',
-                    success : function(dataRecived) {              
-                        var row = $('#umbrella-grid-row-' + dataObj.gridRow);
-                        if(row.length> 0) {
-                            row.append(dataRecived)
-                        }
-                        else {
-                            var rowElement = '<tr id="umbrella-grid-row-' + dataObj.gridRow + '">' + dataRecived + '</tr>';
-                            $('#umbrella-grid-table').append(rowElement);
-                        }
-
-                        form.reset();
-
-                        $('#addUmbrellaModal').modal('toggle');
-                    },
+                    success : onAddUbrellaSuccess,
                     error : function(request,error)
                     {
                         console.log("error", error);
@@ -40,17 +65,33 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#addUmbrellaModal">Add umbrella</button>
-        <table class="table table-bordered mt-5" id="umbrella-grid-table">
-            <c:forEach items="${grid}" var="row">
-                <tr id="umbrella-grid-row-${row.getKey()}">
-                    <c:forEach items="${row.getValue()}" var="column">
-                        <c:set var="column" value="${column}" scope="request"/>
-                        <c:import url="../fragments/grid/gridTd.jsp"/>
+        <h2>Umbrella grid</h2>
+        <div class="row">
+            <div class="col-12">
+                <table class="umbrella-grid table table-bordered mt-5" id="umbrella-grid-table">
+                    <c:forEach items="${grid}" var="row">
+                        <tr id="umbrella-grid-row-${row.getKey()}">
+                            <c:forEach items="${row.getValue()}" var="column">
+                                <c:set var="column" value="${column}" scope="request"/>
+                                <c:import url="../fragments/grid/gridTd.jsp"/>
+                            </c:forEach>
+                            <td>
+                                <button data-rowid="${row.getKey()}" data-columnid="${row.getValue().size() + 1}" class="btn btn-primary addUmbrellaBtn">
+                                +
+                                </button>
+                            </td>
+                        </tr>    
                     </c:forEach>
-                </tr>    
-            </c:forEach>
-        </table>
+                    <tr id="umbrella-grid-row-${grid.size() + 1}" data-newrow="true">
+                        <td>
+                            <button data-rowid="${grid.size() + 1}" data-columnid="1" class="btn btn-primary addUmbrellaBtn">
+                            +
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
         <!-- Add umbrella modal -->
         <div class="modal fade" id="addUmbrellaModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -64,7 +105,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="addUmbrellaForm">
-                        <div class="row">
+                        <%-- <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Row</label>
@@ -77,7 +118,9 @@
                                     <input class="form-control" type="number" name="gridColumn" />
                                 </div>
                             </div>
-                        </div>
+                        </div> --%>
+                        <input class="form-control" type="hidden" name="gridRow" id="addUmbrellaForm-rowId" value="0"/>
+                        <input class="form-control" type="hidden" name="gridColumn" id="addUmbrellaForm-columnId" value="0"/>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
