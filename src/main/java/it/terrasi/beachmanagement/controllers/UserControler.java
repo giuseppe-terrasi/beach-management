@@ -58,7 +58,7 @@ public class UserControler {
             user.setFirstName(userModel.getFirstName());
             user.setLastName(userModel.getLastName());
             user.setActive(true);
-            userService.saveUser(user);
+            userService.createUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new UserModel());
         }
