@@ -35,7 +35,7 @@
 
                 if(newRow !== '') {
                     $(newRow).insertAfter   ('#umbrella-grid-table tr:last-child');
-                    $(newRow).on('click', newUmbrellaBtnClick);
+                    $(newRow).find('td').on('click', newUmbrellaBtnClick);
                 }
                 
                 $('#addUmbrellaModal').modal('toggle');
