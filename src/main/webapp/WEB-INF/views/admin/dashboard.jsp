@@ -3,6 +3,6 @@
 
 <t:maintemplate>
     <jsp:body>
-        Home
+        Dashboard
     </jsp:body>
 </t:maintemplate>
