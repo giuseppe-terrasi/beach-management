@@ -4,7 +4,7 @@
 
 <t:maintemplate>
     <jsp:attribute name="styles">
-        <link href="/vendor/datatables/datatables.bootstrap4.css" rel="stylesheet"/>
+        <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"/>
     </jsp:attribute>
     <jsp:attribute name="scripts">
         <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
