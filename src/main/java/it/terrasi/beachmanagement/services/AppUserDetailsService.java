@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import it.terrasi.beachmanagement.entities.Role;
 import it.terrasi.beachmanagement.entities.User;
+import it.terrasi.beachmanagement.models.AppUser;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
@@ -51,7 +52,11 @@ public class AppUserDetailsService implements UserDetailsService {
 
 
     private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), 
+        AppUser appUser = new AppUser(user.getUsername(), user.getPassword(), 
                     user.isActive(), true, true, true, authorities);
+
+        appUser.setFirstName(user.getFirstName());
+        appUser.setLastName(user.getLastName());
+        return appUser;
     }
 }

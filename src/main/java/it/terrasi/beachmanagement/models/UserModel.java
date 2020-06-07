@@ -24,6 +24,16 @@ public class UserModel {
     @NotBlank(message = "Last name must be provided")
     private String lastName;
 
+
+    public UserModel() {
+    }
+
+    public UserModel(AppUser appUser) {
+        username = appUser.getUsername();
+        firstName = appUser.getFirstName();
+        lastName = appUser.getLastName();
+    }
+
     /**
      * @return String return the username
      */
